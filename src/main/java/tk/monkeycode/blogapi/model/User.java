@@ -2,6 +2,7 @@ package tk.monkeycode.blogapi.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
@@ -32,7 +34,11 @@ public class User {
 	@Column(length = 45, nullable = false)
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToOne
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+	private Profile profile;
+	
+	@ManyToMany
     @JoinTable(name = "user_role",
                joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
