@@ -1,0 +1,33 @@
+A partir de un modelo relacional que creen ustedes, deben construir lo siguiente:
+
+
+1) Capa de modelos (con todos los detalles que debe tener, como vimos en
+clases. Ej: mapeos de tablas, validaciones de campos, relaciones con
+otras entidades, etc). Respecto a la cantidad de tablas, mínimo 5, al menos 1 o 2 relaciones y 2 clases con sus validaciones
+2) Capa de repo-dao
+3) Capa de servicios
+4) Capa de service impl
+5) Capa de controllers (Construcción de servicios rest / Nivel 2)
+6) Capa de excepciones (Manejo de excepciones a nivel de clase)
+7) Application.properties (todas las configuraciones vistas que dejamos en nuestro proyecto curso)
+8) Construcción de toda la capa de seguridad / Spring security (todos los archivos que vimos)
+9) Habilitación de CORS
+10) Documentación de servicios rest (2) y de 2 modelos / Swagger (con eso ya suficiente de ejemplo).
+11) Construcción de algún DTO (con 1 ya cumplen)
+12) Información de tokens en bdd
+13) Capturas guardadas en algún documento de unas pruebas de stress
+
+
+SI DESEAN CREER UN FRONT NO HAY PROBLEMA (NO OBLIGATORIO)
+
+
+ENTREGABLES:
+MODELO DE LA BDD
+REPOSITORIO GIT (ZIP)
+SERVICIOS REST DOCUMENTADOS Y PRUEBAS DE STRESS
+NOMBRE COMPLETO
+RUT o DNI
+ENVIAR AL CORREO: josse@escalab.academy
+
+
+FECHA ENTREGA: 16-06-2022
