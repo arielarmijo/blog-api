@@ -1,5 +1,7 @@
 package tk.monkeycode.blogapi.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,17 +15,22 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="profiles")
-public class Profile {
+public class Profile implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "user_name", length = 45, nullable = false, unique = true)
+	@Column(length = 50, nullable = false, unique = true)
 	private String userName;
+	
 	private String bio;
+	
 	private String image;
-	private boolean following;
+	
+	private boolean following = false;
 	
 	@OneToOne(mappedBy = "profile")
 	private User user;

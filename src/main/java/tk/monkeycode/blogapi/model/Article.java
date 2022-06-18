@@ -1,11 +1,12 @@
 package tk.monkeycode.blogapi.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,18 +21,22 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import tk.monkeycode.blogapi.dto.ArticleRequestDTO;
 
-@Data
 @Entity
 @Table(name="articles")
+@NoArgsConstructor
+@Getter @Setter
 public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String slug;
 	
 	@Column(nullable = false)
@@ -45,7 +50,7 @@ public class Article {
 	
 	@CreationTimestamp
 	@Column(name = "created_at", nullable = false)
-	private LocalDateTime createdAT;
+	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp
 	@Column(name = "updated_at")
@@ -60,10 +65,20 @@ public class Article {
 	@JoinColumn(name = "profile_id", nullable = false, foreignKey = @ForeignKey(name = "fk_articles_profile"))
 	private Profile author;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "article_tag",
                joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
-	private List<Tag> tags;
+	private Set<Tag> tags;
+	
+	public Article(ArticleRequestDTO article) {
+		this.slug = article.getTitle().toLowerCase().replace(" ", "-");
+		this.title = article.getTitle();
+		this.description = article.getDescription();
+		this.body = article.getBody();
+		this.tags = new HashSet<>(article.getTagList().stream().map(Tag::new).toList());
+		this.favorited = false;
+		this.favoritedCount = 0;
+	}
 	
 }

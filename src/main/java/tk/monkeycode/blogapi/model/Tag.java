@@ -7,9 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name="tags")
 public class Tag {
@@ -18,7 +22,12 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Schema(example = "test", description = "Nombre de la etiqueta")
 	@Column(length = 25, nullable = false, unique = true)
 	private String name;
+	
+	public Tag(String name) {
+		this.name = name;
+	}
 
 }
