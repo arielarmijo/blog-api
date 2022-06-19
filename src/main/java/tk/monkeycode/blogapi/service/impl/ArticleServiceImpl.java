@@ -16,8 +16,10 @@ import tk.monkeycode.blogapi.dto.CommentResponseDTO;
 import tk.monkeycode.blogapi.exception.ModelAlreadyExistException;
 import tk.monkeycode.blogapi.exception.ModelNotFoundException;
 import tk.monkeycode.blogapi.model.Article;
+import tk.monkeycode.blogapi.model.Comment;
 import tk.monkeycode.blogapi.model.User;
 import tk.monkeycode.blogapi.repository.ArticleRepository;
+import tk.monkeycode.blogapi.repository.CommentRepository;
 import tk.monkeycode.blogapi.repository.UserRepository;
 import tk.monkeycode.blogapi.service.ArticleService;
 
@@ -26,6 +28,7 @@ import tk.monkeycode.blogapi.service.ArticleService;
 public class ArticleServiceImpl implements ArticleService {
 	
 	private final ArticleRepository articleRepository;
+	private final CommentRepository commentRepository;
 	private final UserRepository userRepository;
 
 	@Override
@@ -91,20 +94,34 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional
 	public CommentResponseDTO addComment(String slug, String body) {
-		// TODO Auto-generated method stub
-		return null;
+		Article article = articleRepository.findArticleBySlug(slug).orElseThrow(() -> new ModelNotFoundException("Artículo no existe."));
+		var principal = SecurityContextHolder.getContext().getAuthentication();
+		User currentUser = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new ModelNotFoundException("Usuario no existe."));
+		Comment comment = new Comment();
+		comment.setArticle(article);
+		comment.setAuthor(currentUser.getProfile());
+		comment.setBody(body);
+		article.addComment(comment);
+		Article updatedArticle = articleRepository.save(article);
+		return new CommentResponseDTO(updatedArticle.getComments().get(0));
 	}
 
 	@Override
-	public List<CommentResponseDTO> getComments(String slug) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public List<CommentResponseDTO> getArticleComments(String slug) {
+		Article article = articleRepository.findArticleBySlug(slug).orElseThrow(() -> new ModelNotFoundException("Artículo no existe."));
+		List<Comment> comments = article.getComments();
+		return comments.stream().map(CommentResponseDTO::new).toList();
 	}
 
 	@Override
-	public void deleteComments(String slug, String id) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public void deleteComments(String slug, Long id) {
+		Article article = articleRepository.findArticleBySlug(slug).orElseThrow(() -> new ModelNotFoundException("Artículo no existe."));
+		Comment comment = commentRepository.findById(id).orElseThrow(() -> new ModelNotFoundException("Commentario no existe."));
+		article.removeComment(comment);
 	}
 
 }

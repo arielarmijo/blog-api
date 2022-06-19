@@ -1,8 +1,7 @@
 package tk.monkeycode.blogapi.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -69,16 +69,29 @@ public class Article {
     @JoinTable(name = "article_tag",
                joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
-	private Set<Tag> tags;
+	private List<Tag> tags;
+	
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comment> comments;
 	
 	public Article(ArticleRequestDTO article) {
 		this.slug = article.getTitle().toLowerCase().replace(" ", "-");
 		this.title = article.getTitle();
 		this.description = article.getDescription();
 		this.body = article.getBody();
-		this.tags = new HashSet<>(article.getTagList().stream().map(Tag::new).toList());
+		this.tags = article.getTagList().stream().map(Tag::new).toList();
 		this.favorited = false;
 		this.favoritedCount = 0;
+	}
+	
+	public void addComment(Comment comment) {
+		comments.add(comment);
+		comment.setArticle(this);
+	}
+	
+	public void removeComment(Comment comment) {
+		comments.remove(comment);
+		comment.setArticle(null);
 	}
 	
 }

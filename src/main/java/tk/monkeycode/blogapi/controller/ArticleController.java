@@ -130,7 +130,7 @@ public class ArticleController {
 				 content = { @Content(schema = @Schema(implementation = CommentsResponse.class)) })
 	@GetMapping("{slug}/comments")
 	public ResponseEntity<CommentsResponse> getArticleComments(@PathVariable String slug) {
-		CommentsResponse body = new CommentsResponse(articleService.getComments(slug));
+		CommentsResponse body = new CommentsResponse(articleService.getArticleComments(slug));
 		return ResponseEntity.ok(body);
 	}
 	
@@ -149,8 +149,9 @@ public class ArticleController {
 	@Operation(summary = "Borrar comentario de un artículo", security = @SecurityRequirement(name = "bearerAuth"))
 	@ApiResponse(responseCode = "200", description = "OK")
 	@DeleteMapping("{slug}/comments/{id}")
-	public void deleteArticleComments(@PathVariable String slug, @PathVariable String id) {
+	public ResponseEntity<String> deleteArticleComments(@PathVariable String slug, @PathVariable(required = true) Long id) {
 		articleService.deleteComments(slug, id);
+		return ResponseEntity.ok("Comentario borrado con éxito.");
 	}
 	
 	

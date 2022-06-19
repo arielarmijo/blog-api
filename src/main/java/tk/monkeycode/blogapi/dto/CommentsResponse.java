@@ -2,11 +2,17 @@ package tk.monkeycode.blogapi.dto;
 
 import java.util.List;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@NoArgsConstructor
+@Getter @Setter
 public class CommentsResponse {
 
-	private final List<CommentResponseDTO> comments;
+	private List<CommentResponseDTO> comments;
 
+	public CommentsResponse(List<CommentResponseDTO> comments) {
+		this.comments = comments;
+	}
 }

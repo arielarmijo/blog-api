@@ -33,10 +33,14 @@ public class Comment {
 	
 	@CreationTimestamp
 	@Column(nullable = false)
-	private LocalDateTime createdAT;
+	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
+	@ManyToOne
+	@JoinColumn(name = "article_id", nullable = false, foreignKey = @ForeignKey(name = "fk_comments_articles"))
+	private Article article;
 	
 	@ManyToOne
 	@JoinColumn(name = "profile_id", nullable = false, foreignKey = @ForeignKey(name = "fk_comments_profile"))

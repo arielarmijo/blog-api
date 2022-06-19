@@ -1,10 +1,15 @@
 package tk.monkeycode.blogapi.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
 public class CommentResponse {
 	
-	private final CommentResponseDTO comment;
-
+	private CommentResponseDTO comment;
+	
 }

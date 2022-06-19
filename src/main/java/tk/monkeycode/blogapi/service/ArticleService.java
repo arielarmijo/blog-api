@@ -26,8 +26,8 @@ public interface ArticleService {
 
 	CommentResponseDTO addComment(String slug, String body);
 
-	List<CommentResponseDTO> getComments(String slug);
+	List<CommentResponseDTO> getArticleComments(String slug);
 
-	void deleteComments(String slug, String id);
+	void deleteComments(String slug, Long id);
 
 }
