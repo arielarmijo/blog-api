@@ -1,6 +1,7 @@
 package tk.monkeycode.blogapi.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class TagServiceImpl implements TagService {
 
 	@Override
 	public TagsResponse findAll() {
-		List<String> tagNames = tagRepository.findAll().stream().map(tag -> tag.getName()).toList();
+		List<String> tagNames = tagRepository.findAll().stream().map(tag -> tag.getName()).collect(Collectors.toList());
 		return new TagsResponse(tagNames);
 	}
 	

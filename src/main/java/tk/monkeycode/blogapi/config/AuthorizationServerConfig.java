@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 @Configuration
 @EnableAuthorizationServer
-@PropertySource("security.properties")
+@PropertySource("classpath:security.properties")
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 	
 	@Value("${security.signing-key}")

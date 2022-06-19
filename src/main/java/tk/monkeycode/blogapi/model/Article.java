@@ -2,6 +2,7 @@ package tk.monkeycode.blogapi.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -79,7 +80,7 @@ public class Article {
 		this.title = article.getTitle();
 		this.description = article.getDescription();
 		this.body = article.getBody();
-		this.tags = article.getTagList().stream().map(Tag::new).toList();
+		this.tags = article.getTagList().stream().map(Tag::new).collect(Collectors.toList());
 		this.favorited = false;
 		this.favoritedCount = 0;
 	}

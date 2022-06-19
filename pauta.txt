@@ -16,18 +16,3 @@ otras entidades, etc). Respecto a la cantidad de tablas, mínimo 5, al menos 1 o
 11) Construcción de algún DTO (con 1 ya cumplen)
 12) Información de tokens en bdd
 13) Capturas guardadas en algún documento de unas pruebas de stress
-
-
-SI DESEAN CREER UN FRONT NO HAY PROBLEMA (NO OBLIGATORIO)
-
-
-ENTREGABLES:
-MODELO DE LA BDD
-REPOSITORIO GIT (ZIP)
-SERVICIOS REST DOCUMENTADOS Y PRUEBAS DE STRESS
-NOMBRE COMPLETO
-RUT o DNI
-ENVIAR AL CORREO: josse@escalab.academy
-
-
-FECHA ENTREGA: 16-06-2022

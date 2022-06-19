@@ -2,6 +2,7 @@ package tk.monkeycode.blogapi.exception;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     )
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     	List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-    	List<String> errors = fieldErrors.stream().map(fe -> fe.getDefaultMessage()).toList();
+    	List<String> errors = fieldErrors.stream().map(fe -> fe.getDefaultMessage()).collect(Collectors.toList());
     	ErrorResponse er = new ErrorResponse(errors);
         return new ResponseEntity<Object>(er, HttpStatus.BAD_REQUEST);
     }

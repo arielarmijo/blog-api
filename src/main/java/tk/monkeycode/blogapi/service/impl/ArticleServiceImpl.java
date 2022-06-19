@@ -3,6 +3,7 @@ package tk.monkeycode.blogapi.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -34,7 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<ArticleResponseDTO> findArticles(String tag, String author, String favorited, String limit, String offset) {
 		List<Article> articles = articleRepository.findAll();
-		return articles.stream().map(ArticleResponseDTO::new).toList();
+		return articles.stream().map(ArticleResponseDTO::new).collect(Collectors.toList());
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<CommentResponseDTO> getArticleComments(String slug) {
 		Article article = articleRepository.findArticleBySlug(slug).orElseThrow(() -> new ModelNotFoundException("Artículo no existe."));
 		List<Comment> comments = article.getComments();
-		return comments.stream().map(CommentResponseDTO::new).toList();
+		return comments.stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 	}
 
 	@Override
