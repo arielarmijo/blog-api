@@ -10,15 +10,13 @@ API REST for a generic blog web app.
 ## Cómo usar
 La aplicación se puede iniciar con el siguiente comando: `docker-compose up`
 
-To stop the application 
-
 ### Documentación Swagger
-La documentación de los endpoints ofrecidos por la aplicación se pueden revisar en
-el siguiente link: [Blog API Documentation v1](http://localhost:8080/swagger-ui/index.html)
+Los endpoints ofrecidos por la aplicación se pueden revisar en
+el siguiente link: [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/index.html)
 
 ### Adminer
 La visualización de los datos se puede realizar mediante la consola de Adminer disponible
-en el siguiente link: [Adminer](http://localhost).
+en el siguiente link: [http://localhost](http://localhost).
 
 Llenar el formulario de login con los siguientes datos:
 - Motor de base de datos: PostgreSQL
